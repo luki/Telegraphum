@@ -28,7 +28,7 @@
 /* Begin PBXFileReference section */
 		0B9AD1671EF4203200BFFAD9 /* Telegraphum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telegraphum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B9AD16A1EF4203200BFFAD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0B9AD16C1EF4203200BFFAD9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		0B9AD16C1EF4203200BFFAD9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		0B9AD1721EF4203200BFFAD9 /* Telegraphum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telegraphum.xcdatamodel; sourceTree = "<group>"; };
 		0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B9AD1771EF4203200BFFAD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
