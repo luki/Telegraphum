@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		0B9AD16B1EF4203200BFFAD9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9AD16A1EF4203200BFFAD9 /* AppDelegate.swift */; };
 		0B9AD16D1EF4203200BFFAD9 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9AD16C1EF4203200BFFAD9 /* MainController.swift */; };
-		0B9AD1701EF4203200BFFAD9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD16E1EF4203200BFFAD9 /* Main.storyboard */; };
 		0B9AD1731EF4203200BFFAD9 /* Telegraphum.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B9AD1711EF4203200BFFAD9 /* Telegraphum.xcdatamodeld */; };
 		0B9AD1751EF4203200BFFAD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */; };
 		0B9AD1781EF4203200BFFAD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1761EF4203200BFFAD9 /* LaunchScreen.storyboard */; };
+		0B9AD19D1EF4229A00BFFAD9 /* Telegram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9AD1991EF4218400BFFAD9 /* Telegram.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +29,6 @@
 		0B9AD1671EF4203200BFFAD9 /* Telegraphum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Telegraphum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B9AD16A1EF4203200BFFAD9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0B9AD16C1EF4203200BFFAD9 /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		0B9AD16F1EF4203200BFFAD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B9AD1721EF4203200BFFAD9 /* Telegraphum.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Telegraphum.xcdatamodel; sourceTree = "<group>"; };
 		0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0B9AD1771EF4203200BFFAD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B9AD19D1EF4229A00BFFAD9 /* Telegram.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,6 @@
 				0B9AD1941EF4218400BFFAD9 /* Telegram.xcodeproj */,
 				0B9AD16A1EF4203200BFFAD9 /* AppDelegate.swift */,
 				0B9AD16C1EF4203200BFFAD9 /* MainController.swift */,
-				0B9AD16E1EF4203200BFFAD9 /* Main.storyboard */,
 				0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */,
 				0B9AD1761EF4203200BFFAD9 /* LaunchScreen.storyboard */,
 				0B9AD1791EF4203200BFFAD9 /* Info.plist */,
@@ -165,7 +164,6 @@
 			files = (
 				0B9AD1781EF4203200BFFAD9 /* LaunchScreen.storyboard in Resources */,
 				0B9AD1751EF4203200BFFAD9 /* Assets.xcassets in Resources */,
-				0B9AD1701EF4203200BFFAD9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,14 +183,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0B9AD16E1EF4203200BFFAD9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0B9AD16F1EF4203200BFFAD9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		0B9AD1761EF4203200BFFAD9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -245,7 +235,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -289,7 +279,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -344,6 +334,7 @@
 				0B9AD17E1EF4203200BFFAD9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Telegram {
+public class Telegram {
   
   // MARK: Basic Implementations
   
@@ -42,7 +42,7 @@ class Telegram {
     "Z":"--..",
     ]
   
-  enum MorseMethod {
+  public enum MorseMethod {
     case ITU
   }
   
@@ -68,8 +68,13 @@ class Telegram {
   
   // MARK: Application Setup
   
-  private var plaintext: String? = nil
-  private var morseMethod: MorseMethod? = nil
+  private var plaintext: String?
+  private var morseMethod: MorseMethod?
+  
+  public init() {
+    plaintext = nil
+    morseMethod = nil
+  }
   
   // Get Methods
   
