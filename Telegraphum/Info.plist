@@ -32,5 +32,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Okomito-Regular.ttf</string>
+		<string>Okomito-Medium.ttf</string>
+		<string>Okomito-Bold.ttf</string>
+	</array>
 </dict>
 </plist>

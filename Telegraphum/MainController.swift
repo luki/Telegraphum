@@ -27,7 +27,7 @@ class MainController: UIViewController {
   let sectionOneLabel: UILabel = {
     let label = UILabel()
     label.falseAutoResizingMaskTranslation()
-    label.font = .systemFont(ofSize: 29/2, weight: UIFontWeightMedium)
+    label.font = UIFont(name: "Okomito-Medium", size: 29/2)
     label.textColor = UIColor(red: 166/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1)
     label.text = "Plaintext"
     return label
@@ -36,7 +36,7 @@ class MainController: UIViewController {
   let sectionOneText: UITextView = {
     let tv = UITextView()
     tv.falseAutoResizingMaskTranslation()
-    tv.font = .systemFont(ofSize: 35/2, weight: UIFontWeightRegular)
+    tv.font = UIFont(name: "Okomito-Regular", size: 35/2)
     tv.textColor = UIColor(red: 217/255.0, green: 217/255.0, blue: 217/255.0, alpha: 1)
     tv.text = "This is some example text"
     tv.backgroundColor = .clear
@@ -52,7 +52,7 @@ class MainController: UIViewController {
     tb.addTarget(self, action: #selector(transcribe), for: .touchUpInside)
     tb.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 115/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
-    tb.titleLabel?.font = .systemFont(ofSize: 29/2, weight: UIFontWeightMedium)
+    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
     return tb
   }()
   
