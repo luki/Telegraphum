@@ -17,6 +17,8 @@ class MainController: UIViewController {
   var player: AVAudioPlayer!
   
   // UI Elements
+  
+  // Upper
   let topBackground: UIView = {
     let tb = UIView()
     tb.falseAutoResizingMaskTranslation()
@@ -56,13 +58,64 @@ class MainController: UIViewController {
     return tb
   }()
   
+  // Lower half
+  
+  let lowerHalfArea: UIView = {
+    let v = UIView()
+    v.falseAutoResizingMaskTranslation()
+    v.backgroundColor = .clear
+    return v
+  }()
+  
+  let lowerHalfView: UIView = {
+    let v = UIView()
+    v.falseAutoResizingMaskTranslation()
+    v.backgroundColor = .clear
+    return v
+  }()
+  
+  let sectionTwoLabel: UILabel = {
+    let label = UILabel()
+    label.falseAutoResizingMaskTranslation()
+    label.font = UIFont(name: "Okomito-Medium", size: 29/2)
+    label.textColor = UIColor(red: 166/255.0, green: 166/255.0, blue: 166/255.0, alpha: 1)
+    label.text = "Code"
+    return label
+  }()
+  
+  let sectionTwoText: UITextView = {
+    let tv = UITextView()
+    tv.falseAutoResizingMaskTranslation()
+    tv.font = UIFont(name: "Okomito-Regular", size: 35/2)
+    tv.textColor = UIColor(red: 217/255.0, green: 217/255.0, blue: 217/255.0, alpha: 1)
+    tv.backgroundColor = .clear
+    tv.textContainer.lineFragmentPadding = 0
+    tv.textContainerInset = .zero
+    tv.isEditable = false
+    tv.text = "XYZ"
+    return tv
+  }()
+  
+  lazy var playButton: UIButton = {
+    let tb = UIButton()
+    tb.falseAutoResizingMaskTranslation()
+    tb.setTitle("Play", for: .normal)
+    tb.addTarget(self, action: #selector(play), for: .touchUpInside)
+    tb.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 115/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(.black, for: .highlighted)
+    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
+    return tb
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     view.backgroundColor = UIColor(red: 14/255.0, green: 14/255.0, blue: 14/255.0, alpha: 1.0)
     
-    addSubviews(to: view, views: topBackground)
+    addSubviews(to: view, views: topBackground, lowerHalfArea)
     addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton)
+    addSubviews(to: lowerHalfView, views: sectionTwoLabel, sectionTwoText, playButton)
+    addSubviews(to: lowerHalfArea, views: lowerHalfView)
     addConstraints(
     
       topBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -81,23 +134,45 @@ class MainController: UIViewController {
       sectionOneText.heightAnchor.constraint(equalToConstant: 128/2),
       
       transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -88/2),
-      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 72/2)
+      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 72/2),
       
+      lowerHalfArea.topAnchor.constraint(equalTo: topBackground.bottomAnchor),
+      lowerHalfArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      lowerHalfArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      lowerHalfArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      
+      lowerHalfView.centerYAnchor.constraint(equalTo: lowerHalfArea.centerYAnchor),
+      lowerHalfView.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 44),
+      lowerHalfView.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -44),
+      lowerHalfView.heightAnchor.constraint(equalToConstant: 240),
+      
+      sectionTwoLabel.leadingAnchor.constraint(equalTo: lowerHalfView.leadingAnchor),
+      sectionTwoLabel.topAnchor.constraint(equalTo: lowerHalfView.topAnchor),
+      
+      sectionTwoText.leadingAnchor.constraint(equalTo: lowerHalfView.leadingAnchor),
+      sectionTwoText.topAnchor.constraint(equalTo: sectionTwoLabel.bottomAnchor, constant: 40/2),
+      sectionTwoText.trailingAnchor.constraint(equalTo: lowerHalfView.trailingAnchor),
+      sectionTwoText.heightAnchor.constraint(equalToConstant: 256/2),
+      
+      playButton.trailingAnchor.constraint(equalTo: lowerHalfView.trailingAnchor),
+      playButton.topAnchor.constraint(equalTo: sectionTwoText.bottomAnchor, constant: 72/2)
     )
+    hideLower()
   }
   
   // Actions / Targets
   
   func transcribe() {
-    if sectionOneText.text != "This is some example text" {
-      telegram.setPlaintext(sectionOneText.text)
-      telegram.setMorseMethod(.ITU)
-      
-     playMorse(telegram.translate()!)
-      
-    } else {
-      print("Can't do it, Sherlock!")
+    if lowerHalfView.isHidden {
+      lowerHalfView.isHidden = false
     }
+    telegram.setPlaintext(sectionOneText.text)
+    telegram.setMorseMethod(.ITU)
+    sectionTwoText.text = telegram.translate()!
+  }
+  
+  func play(_ sender: UIButton) {
+    playMorse(telegram.translate()!)
   }
   
   // App Helpers: Play
@@ -129,6 +204,12 @@ class MainController: UIViewController {
     } catch let error as NSError {
       print(error.description)
     }
+  }
+  
+  // Hide lower section
+  
+  func hideLower() {
+    lowerHalfView.isHidden = true
   }
   
   // Helpers
