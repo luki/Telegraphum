@@ -13,6 +13,9 @@
 		0B9AD1751EF4203200BFFAD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */; };
 		0B9AD1781EF4203200BFFAD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1761EF4203200BFFAD9 /* LaunchScreen.storyboard */; };
 		0B9AD19D1EF4229A00BFFAD9 /* Telegram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B9AD1991EF4218400BFFAD9 /* Telegram.framework */; };
+		0B9AD1AC1EF462E300BFFAD9 /* break.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1A91EF462E300BFFAD9 /* break.wav */; };
+		0B9AD1AD1EF462E300BFFAD9 /* long.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1AA1EF462E300BFFAD9 /* long.wav */; };
+		0B9AD1AE1EF462E300BFFAD9 /* short.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1AB1EF462E300BFFAD9 /* short.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +37,9 @@
 		0B9AD1771EF4203200BFFAD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B9AD1791EF4203200BFFAD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B9AD1941EF4218400BFFAD9 /* Telegram.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Telegram.xcodeproj; path = Telegram/Telegram.xcodeproj; sourceTree = "<group>"; };
+		0B9AD1A91EF462E300BFFAD9 /* break.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = break.wav; path = ../break.wav; sourceTree = "<group>"; };
+		0B9AD1AA1EF462E300BFFAD9 /* long.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = long.wav; path = ../long.wav; sourceTree = "<group>"; };
+		0B9AD1AB1EF462E300BFFAD9 /* short.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = short.wav; path = ../short.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,7 @@
 				0B9AD1941EF4218400BFFAD9 /* Telegram.xcodeproj */,
 				0B9AD16A1EF4203200BFFAD9 /* AppDelegate.swift */,
 				0B9AD16C1EF4203200BFFAD9 /* MainController.swift */,
+				0B9AD1AF1EF462EC00BFFAD9 /* audio */,
 				0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */,
 				0B9AD1761EF4203200BFFAD9 /* LaunchScreen.storyboard */,
 				0B9AD1791EF4203200BFFAD9 /* Info.plist */,
@@ -84,6 +91,16 @@
 				0B9AD1991EF4218400BFFAD9 /* Telegram.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0B9AD1AF1EF462EC00BFFAD9 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				0B9AD1A91EF462E300BFFAD9 /* break.wav */,
+				0B9AD1AA1EF462E300BFFAD9 /* long.wav */,
+				0B9AD1AB1EF462E300BFFAD9 /* short.wav */,
+			);
+			name = audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +181,9 @@
 			files = (
 				0B9AD1781EF4203200BFFAD9 /* LaunchScreen.storyboard in Resources */,
 				0B9AD1751EF4203200BFFAD9 /* Assets.xcassets in Resources */,
+				0B9AD1AC1EF462E300BFFAD9 /* break.wav in Resources */,
+				0B9AD1AD1EF462E300BFFAD9 /* long.wav in Resources */,
+				0B9AD1AE1EF462E300BFFAD9 /* short.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

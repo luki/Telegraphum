@@ -8,10 +8,13 @@
 
 import UIKit
 import Telegram
+import AudioToolbox
+import AVFoundation
 
 class MainController: UIViewController {
   
   let telegram = Telegram()
+  var player: AVAudioPlayer!
   
   // UI Elements
   let topBackground: UIView = {
@@ -47,7 +50,8 @@ class MainController: UIViewController {
     tb.falseAutoResizingMaskTranslation()
     tb.setTitle("Transcribe", for: .normal)
     tb.addTarget(self, action: #selector(transcribe), for: .touchUpInside)
-    tb.tintColor = UIColor(red: 140/255, green: 60/255, blue: 85/250, alpha: 1.0)
+    tb.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 115/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(.black, for: .highlighted)
     tb.titleLabel?.font = .systemFont(ofSize: 29/2, weight: UIFontWeightMedium)
     return tb
   }()
@@ -89,10 +93,41 @@ class MainController: UIViewController {
       telegram.setPlaintext(sectionOneText.text)
       telegram.setMorseMethod(.ITU)
       
-      print(telegram.translate()!)
+     playMorse(telegram.translate()!)
       
     } else {
       print("Can't do it, Sherlock!")
+    }
+  }
+  
+  // App Helpers: Play
+  
+  func playMorse(_ code: String) {
+    code.characters.forEach {
+      print($0)
+      switch String($0) {
+      case "-":
+        playSound(fileName: "long", ext: "wav")
+      case ".":
+        playSound(fileName: "short", ext: "wav")
+      case " ":
+        playSound(fileName: "break", ext: "wav")
+      default:
+        print("Eh?")
+      }
+    }
+  }
+  
+  func playSound(fileName name: String, ext: String) {
+    let url = Bundle.main.url(forResource: name, withExtension: ext)!
+    do {
+      player = try AVAudioPlayer(contentsOf: url)
+      guard let player = player else { return }
+      player.prepareToPlay()
+      player.play()
+      while player.isPlaying { }
+    } catch let error as NSError {
+      print(error.description)
     }
   }
   
