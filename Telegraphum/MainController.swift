@@ -52,7 +52,7 @@ class MainController: UIViewController {
     tb.falseAutoResizingMaskTranslation()
     tb.setTitle("Transcribe", for: .normal)
     tb.addTarget(self, action: #selector(transcribe), for: .touchUpInside)
-    tb.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 115/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
     tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
     return tb
@@ -87,7 +87,7 @@ class MainController: UIViewController {
     let tv = UITextView()
     tv.falseAutoResizingMaskTranslation()
     tv.font = UIFont(name: "Okomito-Regular", size: 35/2)
-    tv.textColor = UIColor(red: 217/255.0, green: 217/255.0, blue: 217/255.0, alpha: 1)
+    tv.textColor = UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1)
     tv.backgroundColor = .clear
     tv.textContainer.lineFragmentPadding = 0
     tv.textContainerInset = .zero
@@ -101,7 +101,7 @@ class MainController: UIViewController {
     tb.falseAutoResizingMaskTranslation()
     tb.setTitle("Play", for: .normal)
     tb.addTarget(self, action: #selector(play), for: .touchUpInside)
-    tb.setTitleColor(UIColor(red: 75/255, green: 200/255, blue: 115/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
     tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
     return tb
@@ -123,18 +123,18 @@ class MainController: UIViewController {
       topBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       topBackground.heightAnchor.constraint(equalToConstant: view.frame.height*0.372),
       
-      sectionOneLabel.topAnchor.constraint(equalTo: topBackground.topAnchor, constant: 128/2),
-      sectionOneLabel.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 88/2),
-      sectionOneLabel.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -88/2),
+      sectionOneLabel.topAnchor.constraint(equalTo: topBackground.topAnchor, constant: 128/2 - 3),
+      sectionOneLabel.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
+      sectionOneLabel.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
       sectionOneLabel.heightAnchor.constraint(equalToConstant: 29/2),
       
-      sectionOneText.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 88/2),
-      sectionOneText.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -88/2),
-      sectionOneText.topAnchor.constraint(equalTo: sectionOneLabel.bottomAnchor, constant: 40/2),
+      sectionOneText.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
+      sectionOneText.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
+      sectionOneText.topAnchor.constraint(equalTo: sectionOneLabel.bottomAnchor, constant: 18.5),
       sectionOneText.heightAnchor.constraint(equalToConstant: 128/2),
       
-      transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -88/2),
-      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 72/2),
+      transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
+      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 25), //36
       
       lowerHalfArea.topAnchor.constraint(equalTo: topBackground.bottomAnchor),
       lowerHalfArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -142,8 +142,8 @@ class MainController: UIViewController {
       lowerHalfArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       
       lowerHalfView.centerYAnchor.constraint(equalTo: lowerHalfArea.centerYAnchor),
-      lowerHalfView.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 44),
-      lowerHalfView.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -44),
+      lowerHalfView.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 42.5),
+      lowerHalfView.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -42.5),
       lowerHalfView.heightAnchor.constraint(equalToConstant: 240),
       
       sectionTwoLabel.leadingAnchor.constraint(equalTo: lowerHalfView.leadingAnchor),
@@ -158,6 +158,10 @@ class MainController: UIViewController {
       playButton.topAnchor.constraint(equalTo: sectionTwoText.bottomAnchor, constant: 72/2)
     )
     hideLower()
+  }
+  
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
   }
   
   // Actions / Targets
