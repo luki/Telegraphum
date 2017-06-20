@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Telegram
 import AudioToolbox
 import AVFoundation
 
@@ -15,7 +14,7 @@ class MainController: UIViewController {
   
   let telegram = Telegram()
   var player: AVAudioPlayer!
-  
+
   // UI Elements
   
   // Upper
@@ -96,16 +95,21 @@ class MainController: UIViewController {
     return tv
   }()
   
-  lazy var playButton: UIButton = {
+  var playButton: UIButton = {
     let tb = UIButton()
     tb.falseAutoResizingMaskTranslation()
     tb.setTitle("Play", for: .normal)
     tb.addTarget(self, action: #selector(play), for: .touchUpInside)
     tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
+    tb.setTitleColor(.darkGray, for: .disabled)
     tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
     return tb
-  }()
+    }() {
+    didSet {
+      if playButton.isEnabled { playButton.titleColor(for: .normal) }
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -167,24 +171,28 @@ class MainController: UIViewController {
   // Actions / Targets
   
   func transcribe() {
+    
     if lowerHalfView.isHidden {
       lowerHalfView.isHidden = false
     }
+    
     telegram.setPlaintext(sectionOneText.text)
     telegram.setMorseMethod(.ITU)
     sectionTwoText.text = telegram.translate()!
   }
   
   func play(_ sender: UIButton) {
-    playMorse(telegram.translate()!)
+    playButton.isEnabled = false
+    DispatchQueue.global(qos: .background).async {
+      self.playMorse(self.telegram.translate()!)
+    }
   }
   
   // App Helpers: Play
   
   func playMorse(_ code: String) {
-    code.characters.forEach {
-      print($0)
-      switch String($0) {
+    for char in code.characters {
+      switch String(char) {
       case "-":
         playSound(fileName: "long", ext: "wav")
       case ".":
@@ -194,10 +202,15 @@ class MainController: UIViewController {
       default:
         print("Eh?")
       }
+      player.stop()
     }
+    playButton.isEnabled = true
+    player = nil
+    print("Done!")
   }
   
   func playSound(fileName name: String, ext: String) {
+    
     let url = Bundle.main.url(forResource: name, withExtension: ext)!
     do {
       player = try AVAudioPlayer(contentsOf: url)
