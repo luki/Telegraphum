@@ -13,7 +13,7 @@ import AVFoundation
 class MainController: UIViewController {
   
   let telegram = Telegram()
-  var player: AVAudioPlayer!
+  var player = AVQueuePlayer()
 
   // UI Elements
   
@@ -182,10 +182,9 @@ class MainController: UIViewController {
   }
   
   func play(_ sender: UIButton) {
+    playMorse(sectionTwoText.text)
     playButton.isEnabled = false
-    DispatchQueue.global(qos: .background).async {
-      self.playMorse(self.telegram.translate()!)
-    }
+    player.play()
   }
   
   // App Helpers: Play
@@ -202,25 +201,12 @@ class MainController: UIViewController {
       default:
         print("Eh?")
       }
-      player.stop()
     }
     playButton.isEnabled = true
-    player = nil
-    print("Done!")
   }
   
   func playSound(fileName name: String, ext: String) {
-    
-    let url = Bundle.main.url(forResource: name, withExtension: ext)!
-    do {
-      player = try AVAudioPlayer(contentsOf: url)
-      guard let player = player else { return }
-      player.prepareToPlay()
-      player.play()
-      while player.isPlaying { }
-    } catch let error as NSError {
-      print(error.description)
-    }
+    player.insert(AVPlayerItem(url: Bundle.main.url(forResource: name, withExtension: ext)!), after: player.items().last)
   }
   
   // Hide lower section
