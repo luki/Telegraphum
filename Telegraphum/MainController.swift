@@ -98,7 +98,9 @@ class MainController: UIViewController {
   var playButton: UIButton = {
     let tb = UIButton()
     tb.falseAutoResizingMaskTranslation()
-    tb.setTitle("Play", for: .normal)
+    tb.contentMode = .scaleAspectFit
+    tb.setImage(UIImage(named: "play"), for: .normal)
+//    tb.setTitle("Play", for: .normal)
     tb.addTarget(self, action: #selector(play), for: .touchUpInside)
     tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
@@ -111,6 +113,34 @@ class MainController: UIViewController {
     }
   }
   
+  var flashButton: UIButton = {
+    let tb = UIButton()
+    tb.falseAutoResizingMaskTranslation()
+    tb.contentMode = .scaleAspectFit
+    tb.setImage(UIImage(named: "flashlight"), for: .normal)
+    //    tb.setTitle("Play", for: .normal)
+    tb.addTarget(self, action: #selector(flashLightAction), for: .touchUpInside)
+    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(.black, for: .highlighted)
+    tb.setTitleColor(.darkGray, for: .disabled)
+    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
+    return tb
+    }()
+  
+  var copyButton: UIButton = {
+    let tb = UIButton()
+    tb.falseAutoResizingMaskTranslation()
+    tb.contentMode = .scaleAspectFit
+    tb.setImage(UIImage(named: "clipboard"), for: .normal)
+    //    tb.setTitle("Play", for: .normal)
+    tb.addTarget(self, action: #selector(copyText), for: .touchUpInside)
+    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(.black, for: .highlighted)
+    tb.setTitleColor(.darkGray, for: .disabled)
+    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
+    return tb
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -118,7 +148,7 @@ class MainController: UIViewController {
     
     addSubviews(to: view, views: topBackground, lowerHalfArea)
     addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton)
-    addSubviews(to: lowerHalfView, views: sectionTwoLabel, sectionTwoText, playButton)
+    addSubviews(to: lowerHalfView, views: sectionTwoLabel, sectionTwoText, playButton, flashButton, copyButton)
     addSubviews(to: lowerHalfArea, views: lowerHalfView)
     addConstraints(
     
@@ -159,7 +189,19 @@ class MainController: UIViewController {
       sectionTwoText.heightAnchor.constraint(equalToConstant: 256/2),
       
       playButton.trailingAnchor.constraint(equalTo: lowerHalfView.trailingAnchor),
-      playButton.topAnchor.constraint(equalTo: sectionTwoText.bottomAnchor, constant: 72/2)
+      playButton.topAnchor.constraint(equalTo: sectionTwoText.bottomAnchor, constant: 72/2),
+      playButton.heightAnchor.constraint(equalToConstant: 20),
+      playButton.widthAnchor.constraint(equalToConstant: 20.5),
+      
+      flashButton.trailingAnchor.constraint(equalTo: playButton.leadingAnchor, constant: -12.5),
+      flashButton.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
+      flashButton.heightAnchor.constraint(equalToConstant: 20),
+      flashButton.widthAnchor.constraint(equalToConstant: 12.5),
+      
+      copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42.8),
+      copyButton.centerYAnchor.constraint(equalTo: flashButton.centerYAnchor),
+      copyButton.heightAnchor.constraint(equalToConstant: 22.5),
+      copyButton.widthAnchor.constraint(equalToConstant: 20.5)
     )
     hideLower()
   }
@@ -179,6 +221,7 @@ class MainController: UIViewController {
     telegram.setPlaintext(sectionOneText.text)
     telegram.setMorseMethod(.ITU)
     sectionTwoText.text = telegram.translate()!
+//    flashLight(withInterval: 40)
   }
   
   func play(_ sender: UIButton) {
@@ -205,8 +248,51 @@ class MainController: UIViewController {
     playButton.isEnabled = true
   }
   
+  func copyText() {
+    UIPasteboard.general.string = sectionTwoText.text
+  }
+  
   func playSound(fileName name: String, ext: String) {
     player.insert(AVPlayerItem(url: Bundle.main.url(forResource: name, withExtension: ext)!), after: player.items().last)
+  }
+  
+  func flashLightAction() {
+    sectionTwoText.text.characters.forEach {
+      switch String($0) {
+      case "-":
+        flashLight(withInterval: 1)
+      case ".":
+        flashLight(withInterval: 0.5)
+      case " ":
+        _ = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
+          
+        }
+      default:
+        print("Eh?")
+      }
+    }
+  }
+  
+  func flashLight(withInterval int: Double) {
+    _ = Timer.scheduledTimer(withTimeInterval: int, repeats: false) {
+      (_) in
+      self.useFlashLight()
+    }
+    // Turns Off
+    useFlashLight()
+  }
+  
+  func useFlashLight() {
+    if let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo), device.hasTorch {
+      do {
+        try device.lockForConfiguration()
+        let torchOn = device.isTorchActive
+        try device.setTorchModeOnWithLevel(1.0)
+        device.torchMode = torchOn ? .off : .on
+      } catch {
+        print("Hello")
+      }
+    }
   }
   
   // Hide lower section
@@ -223,8 +309,7 @@ class MainController: UIViewController {
   func addConstraints(_ consts: NSLayoutConstraint...) {
     NSLayoutConstraint.activate(consts)
   }
-  
-}
+  }
 
 extension UIView {
   func falseAutoResizingMaskTranslation() {
