@@ -42,13 +42,13 @@ public class Telegram {
     "Z":"--..",
     ]
   
-  public enum MorseMethod {
+  public enum Substitution {
     case ITU
   }
   
   //  enum errorCode: Int {
   //    case plaintext
-  //    case morseMethod
+  //    case substitution
   //  }
   
   private func charToMorseChunk(_ char: String, transcription: [String:String]) -> String {
@@ -69,11 +69,11 @@ public class Telegram {
   // MARK: Application Setup
   
   private var plaintext: String?
-  private var morseMethod: MorseMethod?
+  private var substitution: Substitution?
   
   public init() {
     plaintext = nil
-    morseMethod = nil
+    substitution = nil
   }
   
   // Get Methods
@@ -82,8 +82,8 @@ public class Telegram {
     return plaintext
   }
   
-  public func getMorseMethod() -> MorseMethod? {
-    return morseMethod
+  public func getsubstitution() -> Substitution? {
+    return substitution
   }
   
   // Set Methods
@@ -92,17 +92,17 @@ public class Telegram {
     plaintext = text
   }
   
-  public func setMorseMethod(_ mthd: MorseMethod) {
-    morseMethod = mthd
+  public func setSubstitution(_ mthd: Substitution) {
+    substitution = mthd
   }
   
   public func translate() -> String? {
     
     if plaintext == nil { return nil }
     
-    if morseMethod == nil { return nil } else {
+    if substitution == nil { return nil } else {
       
-      switch morseMethod! {
+      switch substitution! {
       case .ITU:
         return phraseToMorse(plaintext!, transcription: itu)
       }

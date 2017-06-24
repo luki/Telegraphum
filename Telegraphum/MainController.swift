@@ -14,6 +14,8 @@ class MainController: UIViewController {
   
   let telegram = Telegram()
   var player = AVQueuePlayer()
+    
+  let substitutions = ["International", "Continental"]
 
   // UI Elements
   
@@ -141,6 +143,22 @@ class MainController: UIViewController {
     return tb
   }()
   
+  lazy var selectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.itemSize = CGSize(width: 467/2, height: 52/2)
+    layout.minimumLineSpacing = 0
+    let cv = UICollectionView(frame: CGRect(x: 0, y: 0, width: 467/2, height: 188/2), collectionViewLayout: layout)
+    cv.falseAutoResizingMaskTranslation()
+    cv.backgroundColor = UIColor(red: 23/255.0, green: 23/255.0, blue: 23/255.0, alpha: 1.0)
+    //    cv.isScrollEnabled = false
+    cv.layer.cornerRadius = 1.5
+    cv.clipsToBounds = true
+    cv.dataSource = self
+    cv.contentInset = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+    cv.register(SelectionCell.self, forCellWithReuseIdentifier: "cell")
+    return cv
+  }()
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -150,6 +168,7 @@ class MainController: UIViewController {
     addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton)
     addSubviews(to: lowerHalfView, views: sectionTwoLabel, sectionTwoText, playButton, flashButton, copyButton)
     addSubviews(to: lowerHalfArea, views: lowerHalfView)
+    addSubviews(to: view, views: selectionView)
     addConstraints(
     
       topBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -219,15 +238,20 @@ class MainController: UIViewController {
     }
     
     telegram.setPlaintext(sectionOneText.text)
-    telegram.setMorseMethod(.ITU)
+    telegram.setSubstitution(.ITU)
     sectionTwoText.text = telegram.translate()!
 //    flashLight(withInterval: 40)
   }
   
   func play(_ sender: UIButton) {
-    playMorse(sectionTwoText.text)
-    playButton.isEnabled = false
-    player.play()
+    if player.items().count == 0 {
+      sender.isEnabled = false
+      playMorse(sectionTwoText.text)
+      player.play()
+    } else {
+      player.pause()
+      player.removeAllItems()
+    }
   }
   
   // App Helpers: Play
@@ -309,7 +333,18 @@ class MainController: UIViewController {
   func addConstraints(_ consts: NSLayoutConstraint...) {
     NSLayoutConstraint.activate(consts)
   }
+}
+
+extension MainController: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 2
   }
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SelectionCell
+    cell.contentLabel.text = substitutions[indexPath.row]
+    return cell
+  }
+}
 
 extension UIView {
   func falseAutoResizingMaskTranslation() {
