@@ -261,13 +261,35 @@ class MainController: UIViewController {
   
   func transcribe() {
     
-    if lowerHalfView.isHidden {
-      lowerHalfView.isHidden = false
-    }
-    
     telegram.setPlaintext(sectionOneText.text)
     telegram.setSubstitution(.ITU)
-    sectionTwoText.text = telegram.translate()!
+    
+    switch telegram.getMethod() {
+      case .some:
+        if lowerHalfView.isHidden {
+          lowerHalfView.isHidden = false
+        }
+        sectionTwoText.text = telegram.translate()!
+      case .none:
+        let alert = UIAlertController(title: "No Method Set.", message: "Please choose 'Morse to Phrase' or 'Phrase to Morse'", preferredStyle: .alert)
+      
+        let a1 = UIAlertAction(title: "To Morse", style: .default) { _ in
+          self.telegram.setMethod(.ToMorse)
+          self.transcribe()
+        }
+      
+        let a2 = UIAlertAction(title: "To Phrase", style: .default) { _ in
+          self.telegram.setMethod(.ToPhrase)
+          self.transcribe()
+        }
+      
+        let a3 = UIAlertAction(title: "Later", style: .cancel) { _ in
+          self.dismiss(animated: true, completion: nil)
+        }
+      
+      alert.addActions(a1, a2, a3)
+      present(alert, animated: true, completion: nil)
+    }
 //    flashLight(withInterval: 40)
   }
   
@@ -294,7 +316,7 @@ class MainController: UIViewController {
       case " ":
         playSound(fileName: "break", ext: "wav")
       default:
-        print("Eh?")
+        print("Unknown file.")
       }
     }
     playButton.isEnabled = true
@@ -377,5 +399,11 @@ extension MainController: UICollectionViewDataSource {
 extension UIView {
   func falseAutoResizingMaskTranslation() {
     self.translatesAutoresizingMaskIntoConstraints = false
+  }
+}
+
+extension UIAlertController {
+  func addActions(_ actions: UIAlertAction...) {
+    actions.forEach { self.addAction($0) }
   }
 }
