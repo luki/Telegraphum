@@ -62,7 +62,7 @@ class MainController: UIViewController {
   lazy var selectionButton: UIButton = {
     let tb = UIButton()
     tb.falseAutoResizingMaskTranslation()
-    tb.setTitle("Transcribe", for: .normal)
+    tb.setTitle("Select Method", for: .normal)
     tb.addTarget(self, action: #selector(selectionAction), for: .touchUpInside)
     tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
@@ -252,11 +252,7 @@ class MainController: UIViewController {
   // Actions / Targets
   
   func selectionAction() {
-    print("Test")
-    view.addSubview(selectionView)
-    addConstraints(
-      selectionView.centerXAnchor.constraint(equalTo: selectionButton.trailingAnchor)
-    )
+    transcribeMethodAlert()
   }
   
   func transcribe() {
@@ -265,30 +261,22 @@ class MainController: UIViewController {
     telegram.setSubstitution(.ITU)
     
     switch telegram.getMethod() {
-      case .some:
+      case .some(let method):
         if lowerHalfView.isHidden {
           lowerHalfView.isHidden = false
+          
+          switch method {
+            case .ToPhrase:
+              playButton.isHidden = true
+              flashButton.isHidden = true
+            default:
+              playButton.isHidden = false
+              flashButton.isHidden = false
+          }
         }
         sectionTwoText.text = telegram.translate()!
       case .none:
-        let alert = UIAlertController(title: "No Method Set.", message: "Please choose 'Morse to Phrase' or 'Phrase to Morse'", preferredStyle: .alert)
-      
-        let a1 = UIAlertAction(title: "To Morse", style: .default) { _ in
-          self.telegram.setMethod(.ToMorse)
-          self.transcribe()
-        }
-      
-        let a2 = UIAlertAction(title: "To Phrase", style: .default) { _ in
-          self.telegram.setMethod(.ToPhrase)
-          self.transcribe()
-        }
-      
-        let a3 = UIAlertAction(title: "Later", style: .cancel) { _ in
-          self.dismiss(animated: true, completion: nil)
-        }
-      
-      alert.addActions(a1, a2, a3)
-      present(alert, animated: true, completion: nil)
+        transcribeMethodAlert()
     }
 //    flashLight(withInterval: 40)
   }
@@ -367,6 +355,27 @@ class MainController: UIViewController {
         print("Hello")
       }
     }
+  }
+  
+  func transcribeMethodAlert() {
+    let alert = UIAlertController(title: "No Method Set.", message: "Please choose 'Morse to Phrase' or 'Phrase to Morse'", preferredStyle: .alert)
+    
+    let a1 = UIAlertAction(title: "To Morse", style: .default) { _ in
+      self.telegram.setMethod(.ToMorse)
+      self.selectionButton.setTitle("To Morse", for: .normal)
+    }
+    
+    let a2 = UIAlertAction(title: "To Phrase", style: .default) { _ in
+      self.telegram.setMethod(.ToPhrase)
+      self.selectionButton.setTitle("To Phrase", for: .normal)
+    }
+    
+    let a3 = UIAlertAction(title: "Later", style: .cancel) { _ in
+      self.dismiss(animated: true, completion: nil)
+    }
+    
+    alert.addActions(a1, a2, a3)
+    present(alert, animated: true, completion: nil)
   }
   
   // Hide lower section
