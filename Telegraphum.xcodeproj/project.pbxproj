@@ -75,13 +75,13 @@
 				0B9AD16A1EF4203200BFFAD9 /* AppDelegate.swift */,
 				0B9AD16C1EF4203200BFFAD9 /* MainController.swift */,
 				0B0AC16F1EFE72E8001DF615 /* SelectionButton.swift */,
+				0B0AC1711EFE7DE1001DF615 /* SelectionCell.swift */,
 				0BCE36F11EF569BE006A35CC /* TelegramAPI_Extract.swift */,
 				0B9AD1B71EF464EF00BFFAD9 /* resources */,
 				0B9AD1741EF4203200BFFAD9 /* Assets.xcassets */,
 				0B9AD1761EF4203200BFFAD9 /* LaunchScreen.storyboard */,
 				0B9AD1791EF4203200BFFAD9 /* Info.plist */,
 				0B9AD1711EF4203200BFFAD9 /* Telegraphum.xcdatamodeld */,
-				0B0AC1711EFE7DE1001DF615 /* SelectionCell.swift */,
 			);
 			path = Telegraphum;
 			sourceTree = "<group>";

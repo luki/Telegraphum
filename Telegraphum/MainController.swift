@@ -59,6 +59,18 @@ class MainController: UIViewController {
     return tb
   }()
   
+  lazy var selectionButton: UIButton = {
+    let tb = UIButton()
+    tb.falseAutoResizingMaskTranslation()
+    tb.setTitle("Transcribe", for: .normal)
+    tb.addTarget(self, action: #selector(selectionAction), for: .touchUpInside)
+    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
+    tb.setTitleColor(.black, for: .highlighted)
+    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
+    return tb
+  }()
+  
+  
   // Lower half
   
   let lowerHalfArea: UIView = {
@@ -129,7 +141,7 @@ class MainController: UIViewController {
     return tb
     }()
   
-  var copyButton: UIButton = {
+  let copyButton: UIButton = {
     let tb = UIButton()
     tb.falseAutoResizingMaskTranslation()
     tb.contentMode = .scaleAspectFit
@@ -142,6 +154,15 @@ class MainController: UIViewController {
     tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
     return tb
   }()
+  
+//  let selectionButton: SelectionButton = {
+//    let sb = SelectionButton()
+//    sb.sectionOneLabel.text = "Select Substitution"
+//    sb.falseAutoResizingMaskTranslation()
+//    let gr = UITapGestureRecognizer(target: sb, action: #selector(selectionAction))
+//    sb.addGestureRecognizer(gr)
+//    return sb
+//  }()
   
   lazy var selectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
@@ -161,14 +182,12 @@ class MainController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     view.backgroundColor = UIColor(red: 14/255.0, green: 14/255.0, blue: 14/255.0, alpha: 1.0)
     
     addSubviews(to: view, views: topBackground, lowerHalfArea)
-    addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton)
+    addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton, selectionButton)
     addSubviews(to: lowerHalfView, views: sectionTwoLabel, sectionTwoText, playButton, flashButton, copyButton)
     addSubviews(to: lowerHalfArea, views: lowerHalfView)
-    addSubviews(to: view, views: selectionView)
     addConstraints(
     
       topBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -188,7 +207,8 @@ class MainController: UIViewController {
       
       transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
       transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 25), //36
-      
+      selectionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42.8),
+      selectionButton.centerYAnchor.constraint(equalTo: transcribeButton.centerYAnchor),
       lowerHalfArea.topAnchor.constraint(equalTo: topBackground.bottomAnchor),
       lowerHalfArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       lowerHalfArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -230,6 +250,14 @@ class MainController: UIViewController {
   }
   
   // Actions / Targets
+  
+  func selectionAction() {
+    print("Test")
+    view.addSubview(selectionView)
+    addConstraints(
+      selectionView.centerXAnchor.constraint(equalTo: selectionButton.trailingAnchor)
+    )
+  }
   
   func transcribe() {
     

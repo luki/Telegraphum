@@ -22,6 +22,7 @@ class SelectionButton: UIButton {
   let arrowImage: UIImageView = {
     let ai = UIImageView()
     ai.contentMode = .scaleAspectFit
+    ai.image = UIImage(named: "chevron-down")
     ai.falseAutoResizingMaskTranslation()
     return ai
   }()

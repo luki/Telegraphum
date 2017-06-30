@@ -1,49 +1,48 @@
-//
-//  main.swift
-//  Telegram
-//
-//  Created by L on 16/06/2017.
-//  Copyright © 2017 Lukas Mueller. All rights reserved.
-//
-
-import Foundation
-
 public class Telegram {
+  
+  func reverseCollection(_ col: [(String, String)]) -> [(String, String)] {
+    return col.map { ($0.1, $0.0) }
+  }
   
   // MARK: Basic Implementations
   
-  let itu = [
-    "name":"ITU",
-    "A":".-",
-    "B":"-...",
-    "C":"-.-.",
-    "D":"-..",
-    "E":".",
-    "F":"..-.",
-    "G":"--.",
-    "H":"....",
-    "I":"..",
-    "J":".---",
-    "K":"-.-",
-    "L":".-..",
-    "M":"--",
-    "N":"-.",
-    "O":"---",
-    "P":".--.",
-    "Q":"--.-",
-    "R":".-.",
-    "S":"...",
-    "T":"-",
-    "U":"..-",
-    "V":"...-",
-    "W":".--",
-    "X":"-..-",
-    "Y":"-.--",
-    "Z":"--..",
+  let itu: [(key: String, value: String)] = [
+    ("name", "ITU"),
+    ("A", ".-"),
+    ("B", "-..."),
+    ("C", "-.-."),
+    ("D", "-.."),
+    ("E", "."),
+    ("F", "..-."),
+    ("G", "--."),
+    ("H", "...."),
+    ("I", ".."),
+    ("J", ".---"),
+    ("K", "-.-"),
+    ("L", ".-.."),
+    ("M", "--"),
+    ("N", "-."),
+    ("O", "---"),
+    ("P", ".--."),
+    ("Q", "--.-"),
+    ("R", ".-."),
+    ("S", "..."),
+    ("T", "-"),
+    ("U", "..-"),
+    ("V", "...-"),
+    ("W", ".--"),
+    ("X", "-..-"),
+    ("Y", "-.--"),
+    ("Z", "--.."),
     ]
   
   public enum Substitution {
     case ITU
+  }
+  
+  public enum Method {
+    case ToMorse
+    case ToPhrase
   }
   
   //  enum errorCode: Int {
@@ -51,16 +50,25 @@ public class Telegram {
   //    case substitution
   //  }
   
-  private func charToMorseChunk(_ char: String, transcription: [String:String]) -> String {
-    switch transcription[char] {
-    case .some(let chunk):
-      return chunk
-    case .none:
-      return ""
+  private func charToMorseChunk(_ char: String, transcription: [(String, String)]) -> String {
+    
+    for x in transcription {
+      switch x.0 {
+      case char:
+        return x.1
+      default:
+        continue
+      }
+      
     }
+    return ""
   }
   
-  private func phraseToMorse(_ phr: String, transcription: [String:String]) -> String {
+  private func morseToPhrase(_ morse: String, transcription: [(String, String)]) -> String {
+    return morse.characters.split(separator: " ").map { charToMorseChunk(String($0), transcription: reverseCollection(transcription)) }.joined(separator: "")
+  }
+  
+  private func phraseToMorse(_ phr: String, transcription: [(String, String)]) -> String {
     return phr.characters.map {
       charToMorseChunk(String($0).uppercased(), transcription: transcription)
       }.joined(separator: " ")
@@ -69,11 +77,13 @@ public class Telegram {
   // MARK: Application Setup
   
   private var plaintext: String?
+  private var method: Telegram.Method?
   private var substitution: Substitution?
   
   public init() {
     plaintext = nil
     substitution = nil
+    method = nil
   }
   
   // Get Methods
@@ -82,8 +92,12 @@ public class Telegram {
     return plaintext
   }
   
-  public func getsubstitution() -> Substitution? {
+  public func getSubstitution() -> Substitution? {
     return substitution
+  }
+  
+  public func getMethod() -> Telegram.Method? {
+    return method
   }
   
   // Set Methods
@@ -92,19 +106,31 @@ public class Telegram {
     plaintext = text
   }
   
-  public func setSubstitution(_ mthd: Substitution) {
-    substitution = mthd
+  public func setSubstitution(_ subs: Substitution) {
+    substitution = subs
+  }
+  
+  public func setMethod(_ method: Telegram.Method) {
+    self.method = method
   }
   
   public func translate() -> String? {
-    
+    if method == nil { return nil }
     if plaintext == nil { return nil }
     
     if substitution == nil { return nil } else {
       
-      switch substitution! {
-      case .ITU:
-        return phraseToMorse(plaintext!, transcription: itu)
+      switch method! {
+      case .ToMorse:
+        switch substitution! {
+        case .ITU:
+          return phraseToMorse(plaintext!, transcription: itu)
+        }
+      case .ToPhrase:
+        switch substitution! {
+        case .ITU:
+          return morseToPhrase(plaintext!, transcription: itu)
+        }
       }
       
     }
