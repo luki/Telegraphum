@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  Telegraphum
 //
-//  Created by L on 16/06/2017.
-//  Copyright © 2017 Lukas Mueller. All rights reserved.
+//  Created by L on 16/06/42.817.
+//  Copyright © 42.817 Lukas Mueller. All rights reserved.
 //
 
 import UIKit
@@ -74,13 +74,6 @@ class MainController: UIViewController {
   // Lower half
   
   let lowerHalfArea: UIView = {
-    let v = UIView()
-    v.falseAutoResizingMaskTranslation()
-    v.backgroundColor = .clear
-    return v
-  }()
-  
-  let lowerHalfView: UIView = {
     let v = UIView()
     v.falseAutoResizingMaskTranslation()
     v.backgroundColor = .clear
@@ -186,61 +179,57 @@ class MainController: UIViewController {
     
     addSubviews(to: view, views: topBackground, lowerHalfArea)
     addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton, selectionButton)
-    addSubviews(to: lowerHalfView, views: sectionTwoLabel, sectionTwoText, playButton, flashButton, copyButton)
-    addSubviews(to: lowerHalfArea, views: lowerHalfView)
+    addSubviews(to: lowerHalfArea, views: sectionTwoLabel, sectionTwoText, playButton, flashButton, copyButton)
     addConstraints(
-    
-      topBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      topBackground.topAnchor.constraint(equalTo: view.topAnchor),
-      topBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      topBackground.heightAnchor.constraint(equalToConstant: view.frame.height*0.372),
       
-      sectionOneLabel.topAnchor.constraint(equalTo: topBackground.topAnchor, constant: 128/2 - 3),
-      sectionOneLabel.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
-      sectionOneLabel.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
-      sectionOneLabel.heightAnchor.constraint(equalToConstant: 29/2),
+      topBackground.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.45),
+      topBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      topBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      topBackground.topAnchor.constraint(equalTo: view.topAnchor),
       
       sectionOneText.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
       sectionOneText.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
-      sectionOneText.topAnchor.constraint(equalTo: sectionOneLabel.bottomAnchor, constant: 18.5),
+      sectionOneText.centerYAnchor.constraint(equalTo: topBackground.centerYAnchor),
+      sectionOneLabel.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
       sectionOneText.heightAnchor.constraint(equalToConstant: 128/2),
+      sectionOneLabel.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
+      sectionOneLabel.bottomAnchor.constraint(equalTo: sectionOneText.topAnchor, constant: -8),
       
       transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
-      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 25), //36
-      selectionButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42.8),
-      selectionButton.centerYAnchor.constraint(equalTo: transcribeButton.centerYAnchor),
-      lowerHalfArea.topAnchor.constraint(equalTo: topBackground.bottomAnchor),
-      lowerHalfArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 5),
+      
+      selectionButton.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
+      selectionButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 5),
+      
+      
       lowerHalfArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       lowerHalfArea.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      lowerHalfArea.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      lowerHalfArea.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.55),
       
-      lowerHalfView.centerYAnchor.constraint(equalTo: lowerHalfArea.centerYAnchor),
-      lowerHalfView.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 42.5),
-      lowerHalfView.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -42.5),
-      lowerHalfView.heightAnchor.constraint(equalToConstant: 240),
+      sectionTwoText.centerYAnchor.constraint(equalTo: lowerHalfArea.centerYAnchor),
+      sectionTwoText.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 42.8),
+      sectionTwoText.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -42.8),
+      sectionTwoText.heightAnchor.constraint(equalToConstant: 152/2),
+      sectionTwoLabel.bottomAnchor.constraint(equalTo: sectionTwoText.topAnchor, constant: -8),
+      sectionTwoLabel.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 42.8),
+      sectionTwoLabel.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -42.8),
       
-      sectionTwoLabel.leadingAnchor.constraint(equalTo: lowerHalfView.leadingAnchor),
-      sectionTwoLabel.topAnchor.constraint(equalTo: lowerHalfView.topAnchor),
-      
-      sectionTwoText.leadingAnchor.constraint(equalTo: lowerHalfView.leadingAnchor),
-      sectionTwoText.topAnchor.constraint(equalTo: sectionTwoLabel.bottomAnchor, constant: 40/2),
-      sectionTwoText.trailingAnchor.constraint(equalTo: lowerHalfView.trailingAnchor),
-      sectionTwoText.heightAnchor.constraint(equalToConstant: 256/2),
-      
-      playButton.trailingAnchor.constraint(equalTo: lowerHalfView.trailingAnchor),
       playButton.topAnchor.constraint(equalTo: sectionTwoText.bottomAnchor, constant: 72/2),
       playButton.heightAnchor.constraint(equalToConstant: 20),
       playButton.widthAnchor.constraint(equalToConstant: 20.5),
+      playButton.trailingAnchor.constraint(equalTo: lowerHalfArea.trailingAnchor, constant: -42.8),
       
       flashButton.trailingAnchor.constraint(equalTo: playButton.leadingAnchor, constant: -12.5),
       flashButton.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
       flashButton.heightAnchor.constraint(equalToConstant: 20),
       flashButton.widthAnchor.constraint(equalToConstant: 12.5),
       
-      copyButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42.8),
+      copyButton.leadingAnchor.constraint(equalTo: lowerHalfArea.leadingAnchor, constant: 42.8),
       copyButton.centerYAnchor.constraint(equalTo: flashButton.centerYAnchor),
       copyButton.heightAnchor.constraint(equalToConstant: 22.5),
       copyButton.widthAnchor.constraint(equalToConstant: 20.5)
+      
     )
     hideLower()
   }
@@ -262,8 +251,8 @@ class MainController: UIViewController {
     
     switch telegram.getMethod() {
       case .some(let method):
-        if lowerHalfView.isHidden {
-          lowerHalfView.isHidden = false
+        if lowerHalfArea.isHidden {
+          lowerHalfArea.isHidden = false
           
           switch method {
             case .ToPhrase:
@@ -381,7 +370,7 @@ class MainController: UIViewController {
   // Hide lower section
   
   func hideLower() {
-    lowerHalfView.isHidden = true
+    lowerHalfArea.isHidden = true
   }
   
   // Helpers
