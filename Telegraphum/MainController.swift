@@ -36,7 +36,7 @@ class MainController: UIViewController {
     return label
   }()
   
-  let sectionOneText: UITextView = {
+  lazy var sectionOneText: UITextView = {
     let tv = UITextView()
     tv.falseAutoResizingMaskTranslation()
     tv.font = UIFont(name: "Okomito-Regular", size: 35/2)
@@ -45,6 +45,9 @@ class MainController: UIViewController {
     tv.backgroundColor = .clear
     tv.textContainer.lineFragmentPadding = 0
     tv.textContainerInset = .zero
+    tv.delegate = self
+    tv.keyboardType = .asciiCapable
+    tv.keyboardAppearance = .dark
     return tv
   }()
   
@@ -238,6 +241,10 @@ class MainController: UIViewController {
     return .lightContent
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    self.view.endEditing(true)
+  }
+  
   // Actions / Targets
   
   func selectionAction() {
@@ -266,6 +273,7 @@ class MainController: UIViewController {
         sectionTwoText.text = telegram.translate()!
       case .none:
         transcribeMethodAlert()
+        print("None!")
     }
 //    flashLight(withInterval: 40)
   }
@@ -393,6 +401,8 @@ extension MainController: UICollectionViewDataSource {
     return cell
   }
 }
+
+extension MainController: UITextViewDelegate {}
 
 extension UIView {
   func falseAutoResizingMaskTranslation() {
