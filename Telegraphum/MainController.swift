@@ -14,7 +14,7 @@ class MainController: UIViewController {
   
   let telegram = Telegram()
   var player = AVQueuePlayer()
-    
+  
   let substitutions = ["International", "Continental"]
 
   // UI Elements
@@ -117,11 +117,7 @@ class MainController: UIViewController {
     tb.setTitleColor(.darkGray, for: .disabled)
     tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
     return tb
-    }() {
-    didSet {
-      if playButton.isEnabled { playButton.titleColor(for: .normal) }
-    }
-  }
+    }()
   
   var flashButton: UIButton = {
     let tb = UIButton()
@@ -129,7 +125,7 @@ class MainController: UIViewController {
     tb.contentMode = .scaleAspectFit
     tb.setImage(UIImage(named: "flashlight"), for: .normal)
     //    tb.setTitle("Play", for: .normal)
-    tb.addTarget(self, action: #selector(flashLightAction), for: .touchUpInside)
+    tb.addTarget(self, action: #selector(flashlightAction), for: .touchUpInside)
     tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
     tb.setTitleColor(.black, for: .highlighted)
     tb.setTitleColor(.darkGray, for: .disabled)
@@ -252,25 +248,39 @@ class MainController: UIViewController {
   }
   
   func transcribe() {
-    
     telegram.setPlaintext(sectionOneText.text)
     telegram.setSubstitution(.ITU)
     
     switch telegram.getMethod() {
       case .some(let method):
+        switch method {
+          case .ToPhrase:
+            presentLowerInState(isToMorse: false)
+          case .ToMorse:
+            presentLowerInState(isToMorse: true)
+      }
+      if let translationText = telegram.translate() {
+        sectionTwoText.text = translationText
+      }
+      sectionOneText.endEditing(true)
+      case.none:
+        transcribeMethodAlert()
+    }
+    
+    switch telegram.getMethod() {
+      case .some(let method):
         if lowerHalfArea.isHidden {
           lowerHalfArea.isHidden = false
-          
           switch method {
             case .ToPhrase:
-              playButton.isHidden = true
-              flashButton.isHidden = true
+              presentLowerInState(isToMorse: false)
             default:
-              playButton.isHidden = false
-              flashButton.isHidden = false
+              presentLowerInState(isToMorse: true)
           }
         }
         sectionTwoText.text = telegram.translate()!
+        sectionOneText.endEditing(true)
+      
       case .none:
         transcribeMethodAlert()
         print("None!")
@@ -298,9 +308,10 @@ class MainController: UIViewController {
         playSound(fileName: "long", ext: "wav")
       case ".":
         playSound(fileName: "short", ext: "wav")
-      case " ":
+      case "/":
         playSound(fileName: "break", ext: "wav")
       default:
+        print(char)
         print("Unknown file.")
       }
     }
@@ -315,44 +326,60 @@ class MainController: UIViewController {
     player.insert(AVPlayerItem(url: Bundle.main.url(forResource: name, withExtension: ext)!), after: player.items().last)
   }
   
-  func flashLightAction() {
-    sectionTwoText.text.characters.forEach {
-      switch String($0) {
-      case "-":
-        flashLight(withInterval: 1)
-      case ".":
-        flashLight(withInterval: 0.5)
-      case " ":
-        _ = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: false) { _ in
-          
+  func flashlightAction() {
+    if let text = sectionTwoText.text {
+      let intervals: [Double] = text.characters.map {
+        switch String($0) {
+          case ".":
+            return 0.25
+          case "-":
+            return 0.8
+          case "/":
+            return -0.8
+          default:
+            return 0
         }
-      default:
-        print("Eh?")
       }
+      
+      flashLight(withInterval: intervals)
     }
   }
   
-  func flashLight(withInterval int: Double) {
-    _ = Timer.scheduledTimer(withTimeInterval: int, repeats: false) {
-      (_) in
-      self.useFlashLight()
+  func flashLight(withInterval i: [Double]) {
+    var timeToCome = 0.0
+    i.forEach { time in
+      
+      timeToCome += time
+      
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + timeToCome, execute: {
+        if time > 0 {
+          self.useFlashlight(turnOn: true)
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + time) {
+            print("Flashing ", time)
+            self.useFlashlight(turnOn: false)
+          }
+        } else if time < 0 {
+          self.useFlashlight(turnOn: false)
+          print("Pause ", time)
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + (time * time).squareRoot()) {
+          }
+        }
+      })
     }
-    // Turns Off
-    useFlashLight()
   }
-  
-  func useFlashLight() {
+
+  func useFlashlight(turnOn: Bool) {
     if let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo), device.hasTorch {
       do {
         try device.lockForConfiguration()
-        let torchOn = device.isTorchActive
         try device.setTorchModeOnWithLevel(1.0)
-        device.torchMode = torchOn ? .off : .on
+        if turnOn { device.torchMode = .on } else { device.torchMode = .off }
       } catch {
         print("Hello")
       }
     }
   }
+  
   
   func transcribeMethodAlert() {
     let alert = UIAlertController(title: "No Method Set.", message: "Please choose 'Morse to Phrase' or 'Phrase to Morse'", preferredStyle: .alert)
@@ -381,6 +408,11 @@ class MainController: UIViewController {
     lowerHalfArea.isHidden = true
   }
   
+  func presentLowerInState(isToMorse: Bool) {
+    self.flashButton.isHidden = !isToMorse
+    self.playButton.isHidden = !isToMorse
+  }
+  
   // Helpers
   func addSubviews(to parent: UIView, views: UIView...) {
     views.forEach { parent.addSubview($0) }
@@ -402,7 +434,15 @@ extension MainController: UICollectionViewDataSource {
   }
 }
 
-extension MainController: UITextViewDelegate {}
+extension MainController: UITextViewDelegate {
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        if text == "/n" {
+//            sectionOneText.endEditing(true)
+//            return false
+//        }
+//        return true
+//    }
+}
 
 extension UIView {
   func falseAutoResizingMaskTranslation() {

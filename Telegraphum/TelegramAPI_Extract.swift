@@ -34,6 +34,7 @@ public class Telegram {
     ("X", "-..-"),
     ("Y", "-.--"),
     ("Z", "--.."),
+    (" ", "/"),
     ]
   
   public enum Substitution {
@@ -64,14 +65,26 @@ public class Telegram {
     return ""
   }
   
+  private func morseChunkToChar(_ char: String, transcription: [(String, String)]) -> String {
+    print(char)
+    for x in transcription {
+      switch x.1 {
+      case char:
+        return x.0
+      default:
+        continue
+      }
+      
+    }
+    return ""
+  }
+  
   private func morseToPhrase(_ morse: String, transcription: [(String, String)]) -> String {
-    return morse.characters.split(separator: " ").map { charToMorseChunk(String($0), transcription: reverseCollection(transcription)) }.joined(separator: "")
+    return morse.split(separator: " ").map { morseChunkToChar(String($0), transcription: itu) }.joined()
   }
   
   private func phraseToMorse(_ phr: String, transcription: [(String, String)]) -> String {
-    return phr.characters.map {
-      charToMorseChunk(String($0).uppercased(), transcription: transcription)
-      }.joined(separator: " ")
+    return phr.characters.map { charToMorseChunk(String($0).uppercased(), transcription: itu) }.joined(separator: " ")
   }
   
   // MARK: Application Setup
@@ -103,7 +116,7 @@ public class Telegram {
   // Set Methods
   
   public func setPlaintext(_ text: String) {
-    plaintext = text
+    self.plaintext = text
   }
   
   public func setSubstitution(_ subs: Substitution) {
