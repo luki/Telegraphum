@@ -2,6 +2,7 @@
 Transliterate text to morse and play as sound or flashlight.
 
 ## Features
+### Implemented
 * Transliterate
   * Text to morse
   * Morse to text
@@ -9,6 +10,11 @@ Transliterate text to morse and play as sound or flashlight.
   * Morse
 * Flash morse as light
 * Copy the result as text
+### Planned
+* Realtime transliterating (Without tapping on Transcribe)
+* Sound to text
+* Recognition of morse by camera (Written text and flashlight)
+
 
 ## Availablity
 This application is available on the iOS [App Store](app2.it/telegraphum).
