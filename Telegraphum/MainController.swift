@@ -51,16 +51,16 @@ class MainController: UIViewController {
     return tv
   }()
   
-  lazy var transcribeButton: UIButton = {
-    let tb = UIButton()
-    tb.falseAutoResizingMaskTranslation()
-    tb.setTitle("Transcribe", for: .normal)
-    tb.addTarget(self, action: #selector(transcribe), for: .touchUpInside)
-    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
-    tb.setTitleColor(.black, for: .highlighted)
-    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
-    return tb
-  }()
+//  lazy var transcribeButton: UIButton = {
+//    let tb = UIButton()
+//    tb.falseAutoResizingMaskTranslation()
+//    tb.setTitle("Transcribe", for: .normal)
+//    tb.addTarget(self, action: #selector(transcribe), for: .touchUpInside)
+//    tb.setTitleColor(UIColor(red: 85/255, green: 215/255, blue: 130/250, alpha: 1.0), for: .normal)
+//    tb.setTitleColor(.black, for: .highlighted)
+//    tb.titleLabel?.font = UIFont(name: "Okomito-Medium", size: 29/2)
+//    return tb
+//  }()
   
   lazy var selectionButton: UIButton = {
     let tb = UIButton()
@@ -177,7 +177,7 @@ class MainController: UIViewController {
     view.backgroundColor = UIColor(red: 14/255.0, green: 14/255.0, blue: 14/255.0, alpha: 1.0)
     
     addSubviews(to: view, views: topBackground, lowerHalfArea)
-    addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, transcribeButton, selectionButton)
+    addSubviews(to: topBackground, views: sectionOneLabel, sectionOneText, /*transcribeButton,*/ selectionButton)
     addSubviews(to: lowerHalfArea, views: sectionTwoLabel, sectionTwoText, playButton, flashButton, copyButton)
     addConstraints(
       
@@ -194,8 +194,8 @@ class MainController: UIViewController {
       sectionOneLabel.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
       sectionOneLabel.bottomAnchor.constraint(equalTo: sectionOneText.topAnchor, constant: -8),
       
-      transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
-      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 5),
+//      transcribeButton.trailingAnchor.constraint(equalTo: topBackground.trailingAnchor, constant: -42.8),
+//      transcribeButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 5),
       
       selectionButton.leadingAnchor.constraint(equalTo: topBackground.leadingAnchor, constant: 42.8),
       selectionButton.topAnchor.constraint(equalTo: sectionOneText.bottomAnchor, constant: 5),
@@ -262,7 +262,7 @@ class MainController: UIViewController {
       if let translationText = telegram.translate() {
         sectionTwoText.text = translationText
       }
-      sectionOneText.endEditing(true)
+      
       case.none:
         transcribeMethodAlert()
     }
@@ -279,7 +279,7 @@ class MainController: UIViewController {
           }
         }
         sectionTwoText.text = telegram.translate()!
-        sectionOneText.endEditing(true)
+//        sectionOneText.endEditing(true)
       
       case .none:
         transcribeMethodAlert()
@@ -348,7 +348,7 @@ class MainController: UIViewController {
   func flashLight(withInterval i: [Double]) {
     var timeToCome = 0.0
     i.forEach { time in
-      
+
       timeToCome += time
       
       DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + timeToCome, execute: {
@@ -436,12 +436,23 @@ extension MainController: UICollectionViewDataSource {
 
 extension MainController: UITextViewDelegate {
 //    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        if text == "/n" {
-//            sectionOneText.endEditing(true)
-//            return false
-//        }
-//        return true
+//      transcribe()
+//      return false
 //    }
+  
+  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    return true
+  }
+  
+  func textViewDidChange(_ textView: UITextView) {
+    transcribe()
+  }
+  
+//  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//    print("A )
+//    transcribe()
+//    return true
+//  }
 }
 
 extension UIView {
