@@ -12,8 +12,10 @@ Transliterate text to morse and play as sound or flashlight.
 * Copy the result as text
 ### Planned
 * Realtime transliterating (Without tapping on Transcribe)
-* Sound to text
-* Recognition of morse by camera (Written text and flashlight)
+* Speech/sound to text
+* Morse sound to written morse code
+* Recognition of morse code by camera (Written text and flashlight)
+* Warning if phone is muted or volume 0%
 
 
 ## Availablity
