@@ -2,7 +2,7 @@
 Transliterate text to morse and play as sound or flashlight.
 
 ## Features
-### Implemented
+### Implemented & Released
 * Transliterate
   * Text to morse
   * Morse to text
@@ -10,12 +10,13 @@ Transliterate text to morse and play as sound or flashlight.
   * Morse
 * Flash morse as light
 * Copy the result as text
-### Planned
+### Implemented (Next update)
 * Realtime transliterating (Without tapping on Transcribe)
+* Warning if phone is muted or volume 0%
+### Planned
 * Speech/sound to text
 * Morse sound to written morse code
 * Recognition of morse code by camera (Written text and flashlight)
-* Warning if phone is muted or volume 0%
 
 
 ## Availablity

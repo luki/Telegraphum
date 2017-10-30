@@ -290,6 +290,54 @@ class MainController: UIViewController {
   
   func play(_ sender: UIButton) {
     if player.items().count == 0 {
+      
+      let sharedInstance = AVAudioSession.sharedInstance()
+      // Needs to be active to notice changes in volume
+      try! sharedInstance.setActive(true)
+      
+      if AVAudioSession.sharedInstance().outputVolume == 0 {
+        
+        let background: UIView = {
+          let bg = UIView()
+          bg.backgroundColor = .white
+          bg.layer.cornerRadius = 16
+          bg.clipsToBounds = true
+          bg.translatesAutoresizingMaskIntoConstraints = false
+          return bg
+        }()
+        
+        let warningLabel: UILabel = {
+          let label = UILabel()
+          label.numberOfLines = 0
+          label.text = "Your volume is too low in order for the morse to be played."
+          label.textColor = .black
+          label.font = UIFont(name: "Okomito-Bold", size: 29)
+          label.translatesAutoresizingMaskIntoConstraints = false
+          return label
+        }()
+        
+        background.addSubview(warningLabel)
+        view.addSubview(background)
+        
+        NSLayoutConstraint.activate([
+          background.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+          background.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+          background.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          background.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+          
+          warningLabel.centerXAnchor.constraint(equalTo: background.centerXAnchor),
+          warningLabel.centerYAnchor.constraint(equalTo: background.centerYAnchor),
+          warningLabel.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 20),
+          warningLabel.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -20),
+          
+          background.heightAnchor.constraint(equalTo: warningLabel.heightAnchor, constant: 40)
+        ])
+        
+        UIView.animate(withDuration: 3, animations: {
+          background.alpha = 0
+        })
+        return
+      }
       sender.isEnabled = false
       playMorse(sectionTwoText.text)
       player.play()
@@ -435,24 +483,9 @@ extension MainController: UICollectionViewDataSource {
 }
 
 extension MainController: UITextViewDelegate {
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//      transcribe()
-//      return false
-//    }
-  
-  func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-    return true
-  }
-  
   func textViewDidChange(_ textView: UITextView) {
     transcribe()
   }
-  
-//  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//    print("A )
-//    transcribe()
-//    return true
-//  }
 }
 
 extension UIView {
