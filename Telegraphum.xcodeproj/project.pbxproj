@@ -21,6 +21,7 @@
 		0B9AD1B41EF464E100BFFAD9 /* Okomito-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1B11EF464E100BFFAD9 /* Okomito-Medium.ttf */; };
 		0B9AD1B51EF464E100BFFAD9 /* Okomito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B9AD1B21EF464E100BFFAD9 /* Okomito-Regular.ttf */; };
 		0BCE36F21EF569BE006A35CC /* TelegramAPI_Extract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE36F11EF569BE006A35CC /* TelegramAPI_Extract.swift */; };
+		A31F7A501FA91DD200B70DE6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A31F7A521FA91DD200B70DE6 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,9 @@
 		0B9AD1B11EF464E100BFFAD9 /* Okomito-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Okomito-Medium.ttf"; sourceTree = "<group>"; };
 		0B9AD1B21EF464E100BFFAD9 /* Okomito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Okomito-Regular.ttf"; sourceTree = "<group>"; };
 		0BCE36F11EF569BE006A35CC /* TelegramAPI_Extract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TelegramAPI_Extract.swift; sourceTree = "<group>"; };
+		A31F7A4D1FA91D8700B70DE6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		A31F7A511FA91DD200B70DE6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A31F7A531FA91DDA00B70DE6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 		0B9AD1B71EF464EF00BFFAD9 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				A31F7A521FA91DD200B70DE6 /* Localizable.strings */,
 				0B9AD1B61EF464E400BFFAD9 /* fonts */,
 				0B9AD1AF1EF462EC00BFFAD9 /* audio */,
 			);
@@ -148,6 +153,7 @@
 					0B9AD1661EF4203200BFFAD9 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = 42YT2Y78T5;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -179,6 +185,7 @@
 				0B9AD1B41EF464E100BFFAD9 /* Okomito-Medium.ttf in Resources */,
 				0B9AD1B31EF464E100BFFAD9 /* Okomito-Bold.ttf in Resources */,
 				0B9AD1781EF4203200BFFAD9 /* LaunchScreen.storyboard in Resources */,
+				A31F7A501FA91DD200B70DE6 /* Localizable.strings in Resources */,
 				0B9AD1751EF4203200BFFAD9 /* Assets.xcassets in Resources */,
 				0B9AD1AC1EF462E300BFFAD9 /* break.wav in Resources */,
 				0B9AD1AD1EF462E300BFFAD9 /* long.wav in Resources */,
@@ -209,8 +216,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				0B9AD1771EF4203200BFFAD9 /* Base */,
+				A31F7A4D1FA91D8700B70DE6 /* de */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		A31F7A521FA91DD200B70DE6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A31F7A511FA91DD200B70DE6 /* de */,
+				A31F7A531FA91DDA00B70DE6 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -220,6 +237,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -270,6 +288,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -319,7 +338,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukasam.Telegraphum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -334,7 +354,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukasam.Telegraphum;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -38,12 +38,12 @@ public class Telegram {
     ]
   
   public enum Substitution {
-    case ITU
+    case itu
   }
   
   public enum Method {
-    case ToMorse
-    case ToPhrase
+    case toMorse
+    case toPhrase
   }
   
   //  enum errorCode: Int {
@@ -52,7 +52,6 @@ public class Telegram {
   //  }
   
   private func charToMorseChunk(_ char: String, transcription: [(String, String)]) -> String {
-    
     for x in transcription {
       switch x.0 {
       case char:
@@ -60,7 +59,6 @@ public class Telegram {
       default:
         continue
       }
-      
     }
     return ""
   }
@@ -74,79 +72,38 @@ public class Telegram {
       default:
         continue
       }
-      
     }
     return ""
   }
   
-  private func morseToPhrase(_ morse: String, transcription: [(String, String)]) -> String {
-    return morse.split(separator: " ").map { morseChunkToChar(String($0), transcription: itu) }.joined()
+  private func morseToPhrase(_ morse: String, transcription _: [(String, String)]) -> String {
+    return morse
+      .split(separator: " ")
+      .map { morseChunkToChar(String($0), transcription: itu) }
+      .joined()
   }
   
-  private func phraseToMorse(_ phr: String, transcription: [(String, String)]) -> String {
+  private func phraseToMorse(_ phr: String, transcription _: [(String, String)]) -> String {
     return phr.characters.map { charToMorseChunk(String($0).uppercased(), transcription: itu) }.joined(separator: " ")
   }
   
   // MARK: Application Setup
   
-  private var plaintext: String?
-  private var method: Telegram.Method?
-  private var substitution: Substitution?
+  var method: Telegram.Method
+  var substitution: Substitution
   
-  public init() {
-    plaintext = nil
-    substitution = nil
-    method = nil
-  }
-  
-  // Get Methods
-  
-  public func getPlaintext() -> String? {
-    return plaintext
-  }
-  
-  public func getSubstitution() -> Substitution? {
-    return substitution
-  }
-  
-  public func getMethod() -> Telegram.Method? {
-    return method
-  }
-  
-  // Set Methods
-  
-  public func setPlaintext(_ text: String) {
-    self.plaintext = text
-  }
-  
-  public func setSubstitution(_ subs: Substitution) {
-    substitution = subs
-  }
-  
-  public func setMethod(_ method: Telegram.Method) {
+  public init(method: Telegram.Method, substitution: Substitution) {
     self.method = method
+    self.substitution = substitution
   }
   
-  public func translate() -> String? {
-    if method == nil { return nil }
-    if plaintext == nil { return nil }
-    
-    if substitution == nil { return nil } else {
-      
-      switch method! {
-      case .ToMorse:
-        switch substitution! {
-        case .ITU:
-          return phraseToMorse(plaintext!, transcription: itu)
-        }
-      case .ToPhrase:
-        switch substitution! {
-        case .ITU:
-          return morseToPhrase(plaintext!, transcription: itu)
-        }
-      }
-      
+  public func translate(text: String) -> String? {
+    switch (method, substitution) {
+    case (.toMorse, .itu):
+        return phraseToMorse(text, transcription: itu)
+    case (.toPhrase, .itu):
+        return morseToPhrase(text, transcription: itu)
     }
   }
-  
 }
+

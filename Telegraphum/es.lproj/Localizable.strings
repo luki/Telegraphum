@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  Telegraphum
+
+  Created by Luke Mueller on 31.10.17.
+  Copyright © 2017 Lukas Mueller. All rights reserved.
+*/
+
+"volume-message" = "Your volume is too low in order for the morse to be played.";
+"El volumen está demasiado baja para el morse ser escuchado"
+"clipboard-message" = "Copied to Clipboard";
+
+"transcribe-alert-title" = "No Method Set.";
+"transcribe-alert-message" = "Please choose 'Morse to Phrase' or 'Phrase to Morse'";
+
+"example-text" = "This is some example text";
+"selection-title" = "Select Method";
+"section-one-label" = "Plaintext";
+"section-two-label" = "Code";
+"transcribe-option-to-morse" = "To Morse";
+"transcribe-option-to-phrase" = "To Phrase";
+"transcribe-option-later" = "Later";

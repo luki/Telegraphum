@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  Telegraphum
+
+  Created by Luke Mueller on 31.10.17.
+  Copyright © 2017 Lukas Mueller. All rights reserved.
+*/
+
+"volume-message" = "Die Lautstärke ist unter dem Minimum um den Morsecode abzuspielen";
+"clipboard-message" = "In die Zwischenablage kopiert";
+
+"transcribe-alert-title" = "Keine Methode festgelegt";
+"transcribe-alert-message" = "Optionen sind 'Morse zu Text' und 'Text zu Morse'";
+
+"example-text" = "Das ist eine Beispieleingabe";
+"selection-title" = "Methodenauswahl";
+"section-one-label" = "Klartext";
+"section-two-label" = "Chiffrat";
+"transcribe-option-to-morse" = "Zu Morse";
+"transcribe-option-to-phrase" = "Zu Text";
+"transcribe-option-later" = "Später";
